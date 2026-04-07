@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deniz Çetin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+–ink: #0e0e0e;
+–paper: #f5f0e8;
+–accent: #c4502a;
+–gold: #b8973a;
+–muted: #7a7265;
+–line: rgba(14,14,14,0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–paper);
+color: var(–ink);
+font-family: ‘Cormorant Garamond’, serif;
+overflow-x: hidden;
+cursor: none;
+}
+
+/* Custom cursor */
+.cursor {
+width: 8px; height: 8px;
+background: var(–accent);
+border-radius: 50%;
+position: fixed;
+pointer-events: none;
+z-index: 9999;
+transition: transform 0.1s ease;
+mix-blend-mode: multiply;
+}
+.cursor-ring {
+width: 32px; height: 32px;
+border: 1px solid var(–accent);
+border-radius: 50%;
+position: fixed;
+pointer-events: none;
+z-index: 9998;
+transition: all 0.18s ease;
+mix-blend-mode: multiply;
+}
+
+/* Grain overlay */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.75’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 9000;
+opacity: 0.4;
+}
+
+/* NAV */
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 100;
+padding: 1.5rem 4rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+mix-blend-mode: multiply;
+}
+.nav-logo {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.7rem;
+letter-spacing: 0.2em;
+color: var(–muted);
+text-transform: uppercase;
+}
+.nav-links {
+display: flex;
+gap: 2.5rem;
+list-style: none;
+}
+.nav-links a {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–muted);
+text-decoration: none;
+transition: color 0.3s;
+}
+.nav-links a:hover { color: var(–accent); }
+
+/* HERO */
+.hero {
+min-height: 100vh;
+display: grid;
+grid-template-columns: 1fr 1fr;
+position: relative;
+overflow: hidden;
+}
+
+.hero-left {
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 8rem 4rem 4rem 4rem;
+position: relative;
+z-index: 2;
+}
+
+.hero-label {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 2rem;
+opacity: 0;
+animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero-name {
+font-size: clamp(3.5rem, 7vw, 6rem);
+font-weight: 300;
+line-height: 1.0;
+letter-spacing: -0.02em;
+opacity: 0;
+animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero-name em {
+font-style: italic;
+color: var(–accent);
+}
+
+.hero-tagline {
+margin-top: 2rem;
+font-size: 1.3rem;
+font-weight: 300;
+font-style: italic;
+color: var(–muted);
+line-height: 1.6;
+max-width: 380px;
+opacity: 0;
+animation: fadeUp 0.8s 0.6s forwards;
+}
+
+.hero-cta {
+margin-top: 3rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+opacity: 0;
+animation: fadeUp 0.8s 0.8s forwards;
+}
+.btn {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.65rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+padding: 0.9rem 2rem;
+border: 1px solid var(–ink);
+background: transparent;
+color: var(–ink);
+text-decoration: none;
+transition: all 0.3s;
+cursor: none;
+}
+.btn:hover { background: var(–ink); color: var(–paper); }
+.btn-filled { background: var(–accent); border-color: var(–accent); color: var(–paper); }
+.btn-filled:hover { background: var(–ink); border-color: var(–ink); }
+
+.hero-right {
+position: relative;
+overflow: hidden;
+}
+.hero-right::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background: linear-gradient(135deg, #e8d5b0 0%, #d4b896 40%, #c49a6c 100%);
+z-index: 1;
+}
+
+/* Large decorative letter */
+.deco-letter {
+position: absolute;
+right: -0.1em;
+top: 50%;
+transform: translateY(-50%);
+font-size: 28vw;
+font-weight: 600;
+font-style: italic;
+color: rgba(255,255,255,0.08);
+line-height: 1;
+z-index: 2;
+user-select: none;
+}
+
+/* Floating shapes */
+.shape {
+position: absolute;
+z-index: 3;
+}
+.shape-circle {
+width: 180px; height: 180px;
+border: 1px solid rgba(255,255,255,0.3);
+border-radius: 50%;
+top: 20%; left: 15%;
+animation: rotate 20s linear infinite;
+}
+.shape-dot {
+width: 6px; height: 6px;
+background: var(–accent);
+border-radius: 50%;
+top: 35%; left: 30%;
+animation: float 4s ease-in-out infinite;
+}
+.shape-line {
+width: 1px; height: 120px;
+background: rgba(255,255,255,0.25);
+bottom: 25%; right: 30%;
+animation: float 5s ease-in-out infinite reverse;
+}
+
+/* Vertical text */
+.vertical-text {
+position: absolute;
+bottom: 3rem;
+right: 2rem;
+font-family: ‘Space Mono’, monospace;
+font-size: 0.55rem;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: rgba(255,255,255,0.4);
+writing-mode: vertical-rl;
+z-index: 4;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+position: absolute;
+bottom: 2rem;
+left: 4rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+font-family: ‘Space Mono’, monospace;
+font-size: 0.55rem;
+letter-spacing: 0.2em;
+color: var(–muted);
+opacity: 0;
+animation: fadeUp 0.8s 1.2s forwards;
+}
+.scroll-line {
+width: 40px; height: 1px;
+background: var(–muted);
+position: relative;
+overflow: hidden;
+}
+.scroll-line::after {
+content: ‘’;
+position: absolute;
+left: -100%;
+width: 100%;
+height: 100%;
+background: var(–accent);
+animation: scanline 2s ease-in-out infinite;
+}
+
+/* SECTION BASE */
+section {
+padding: 7rem 4rem;
+position: relative;
+}
+.section-label {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 1rem;
+}
+.section-title {
+font-size: clamp(2rem, 4vw, 3.5rem);
+font-weight: 300;
+line-height: 1.1;
+letter-spacing: -0.01em;
+}
+.section-title em { font-style: italic; color: var(–gold); }
+
+hr.divider {
+border: none;
+border-top: 1px solid var(–line);
+margin: 1.5rem 0 3rem;
+}
+
+/* ABOUT */
+.about {
+display: grid;
+grid-template-columns: 1fr 1.4fr;
+gap: 6rem;
+align-items: start;
+}
+.about-text {
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.8;
+color: #2a2520;
+}
+.about-text p + p { margin-top: 1.5rem; }
+.about-text strong { font-weight: 600; color: var(–accent); }
+
+.about-stats {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2px;
+margin-top: 3rem;
+}
+.stat-box {
+background: var(–ink);
+color: var(–paper);
+padding: 2rem;
+position: relative;
+overflow: hidden;
+transition: transform 0.3s;
+}
+.stat-box:hover { transform: translateY(-4px); }
+.stat-box::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0;
+width: 3px; height: 100%;
+background: var(–accent);
+}
+.stat-number {
+font-size: 2.5rem;
+font-weight: 600;
+font-style: italic;
+line-height: 1;
+color: var(–gold);
+}
+.stat-label {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.55rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: rgba(245,240,232,0.5);
+margin-top: 0.5rem;
+}
+
+/* INTERESTS */
+.interests-section { background: var(–ink); color: var(–paper); }
+.interests-section .section-label { color: var(–gold); }
+.interests-section hr.divider { border-color: rgba(255,255,255,0.1); }
+
+.interests-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px;
+margin-top: 3rem;
+background: rgba(255,255,255,0.06);
+}
+.interest-card {
+padding: 3rem 2.5rem;
+background: var(–ink);
+position: relative;
+overflow: hidden;
+transition: background 0.4s;
+}
+.interest-card:hover { background: #1a1612; }
+.interest-card::after {
+content: ‘’;
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 2px;
+background: var(–accent);
+transform: scaleX(0);
+transition: transform 0.4s ease;
+transform-origin: left;
+}
+.interest-card:hover::after { transform: scaleX(1); }
+
+.interest-icon {
+font-size: 2.5rem;
+margin-bottom: 1.5rem;
+display: block;
+}
+.interest-title {
+font-size: 1.8rem;
+font-weight: 300;
+margin-bottom: 1rem;
+}
+.interest-title em { font-style: italic; color: var(–gold); }
+.interest-desc {
+font-size: 1rem;
+font-weight: 300;
+line-height: 1.7;
+color: rgba(245,240,232,0.55);
+}
+
+.interest-number {
+position: absolute;
+top: 2rem; right: 2rem;
+font-family: ‘Space Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.2em;
+color: rgba(255,255,255,0.1);
+}
+
+/* QUOTE */
+.quote-section {
+background: var(–accent);
+color: var(–paper);
+text-align: center;
+padding: 5rem 4rem;
+}
+.quote-text {
+font-size: clamp(1.5rem, 3vw, 2.5rem);
+font-style: italic;
+font-weight: 300;
+line-height: 1.5;
+max-width: 800px;
+margin: 0 auto;
+}
+.quote-author {
+margin-top: 2rem;
+font-family: ‘Space Mono’, monospace;
+font-size: 0.6rem;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+opacity: 0.6;
+}
+
+/* CONTACT */
+.contact-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 6rem;
+align-items: center;
+}
+.contact-info { }
+.contact-intro {
+font-size: 1.2rem;
+font-weight: 300;
+line-height: 1.8;
+color: var(–muted);
+margin-bottom: 3rem;
+}
+.contact-links {
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+}
+.contact-link {
+display: flex;
+align-items: center;
+gap: 1.5rem;
+text-decoration: none;
+color: var(–ink);
+font-size: 1.1rem;
+font-style: italic;
+transition: color 0.3s;
+padding-bottom: 1.5rem;
+border-bottom: 1px solid var(–line);
+}
+.contact-link:hover { color: var(–accent); }
+.contact-link-label {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.55rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–muted);
+min-width: 60px;
+}
+
+/* Big decorative name */
+.deco-name {
+font-size: clamp(4rem, 10vw, 8rem);
+font-weight: 600;
+font-style: italic;
+color: rgba(14,14,14,0.04);
+line-height: 1;
+user-select: none;
+text-align: right;
+}
+
+/* FOOTER */
+footer {
+background: var(–ink);
+color: rgba(245,240,232,0.3);
+padding: 2rem 4rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+footer span {
+font-family: ‘Space Mono’, monospace;
+font-size: 0.55rem;
+letter-spacing: 0.2em;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(24px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rotate {
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+}
+@keyframes float {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-16px); }
+}
+@keyframes scanline {
+0% { left: -100%; }
+100% { left: 100%; }
+}
+
+/* Reveal on scroll */
+.reveal {
+opacity: 0;
+transform: translateY(30px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+nav { padding: 1.5rem 1.5rem; }
+.nav-links { display: none; }
+.hero { grid-template-columns: 1fr; }
+.hero-right { display: none; }
+section { padding: 5rem 1.5rem; }
+.about { grid-template-columns: 1fr; gap: 3rem; }
+.interests-grid { grid-template-columns: 1fr; }
+.contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+.about-stats { grid-template-columns: 1fr; }
+footer { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-logo">Deniz Çetin</div>
+  <ul class="nav-links">
+    <li><a href="#hakkimda">Hakkımda</a></li>
+    <li><a href="#ilgi">İlgi Alanları</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <p class="hero-label">Kişisel Alan</p>
+    <h1 class="hero-name">Deniz<br><em>Çetin</em></h1>
+    <p class="hero-tagline">Öğretim, bilim ve sanat kesişiminde yaşayan bir zihin.</p>
+    <div class="hero-cta">
+      <a href="#hakkimda" class="btn btn-filled">Keşfet</a>
+      <a href="#iletisim" class="btn">İletişim</a>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>Aşağı kaydır</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <span class="deco-letter">D</span>
+    <div class="shape shape-circle"></div>
+    <div class="shape shape-dot"></div>
+    <div class="shape shape-line"></div>
+    <span class="vertical-text">Öğret — Keşfet — Yarat</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="hakkimda">
+  <div class="about">
+    <div>
+      <p class="section-label reveal">Hakkımda</p>
+      <h2 class="section-title reveal">Bilginin <em>sonsuz</em><br>yolcusu</h2>
+      <hr class="divider reveal">
+      <div class="about-stats reveal">
+        <div class="stat-box">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Merak</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Tutku Alanı</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Misyon</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Öğrenme</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <p>
+        Merhaba, ben <strong>Deniz Çetin</strong>. Öğretim benim için yalnızca bir meslek değil — insanların zihinlerinde ışık yakmak için seçilmiş bir yol.
+      </p>
+      <p>
+        <strong>Bilim</strong>, evreni anlamak için kullandığım mercek. Her soru yeni bir soruya kapı açıyor; bu sonsuz zincir beni büyülüyor. Gözlemden teoriye, teoriden uygulamaya uzanan bu serüven hiç bitmemiş gibi hissettiriyor.
+      </p>
+      <p>
+        <strong>Sanat</strong> ise bilimin sözcüklerle anlatamadığı yerlerde devreye giriyor. Renk, biçim, ritim — bunlar dünyanın daha derin bir diliyle yazılmış mesajlar. Her eser, farklı bir bakış açısına açılan bir pencere.
+      </p>
+      <p>
+        Bu üç dünya — öğretim, bilim, sanat — benim için ayrı disiplinler değil; aynı merakın farklı yüzleri.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- INTERESTS -->
+
+<section id="ilgi" class="interests-section">
+  <p class="section-label reveal">İlgi Alanları</p>
+  <h2 class="section-title reveal">Üç <em>tutku,</em><br>tek zihin</h2>
+  <hr class="divider reveal">
+  <div class="interests-grid reveal">
+    <div class="interest-card">
+      <span class="interest-number">01</span>
+      <span class="interest-icon">📚</span>
+      <h3 class="interest-title"><em>Öğretim</em></h3>
+      <p class="interest-desc">Bilgiyi aktarmak değil, düşünmeyi öğretmek. Her öğrenci farklı bir evren; o evrene kapı aralamak en büyük ayrıcalık. Soru soran bir zihin yetiştirmek, cevap bilen bir zihin yetiştirmekten çok daha değerli.</p>
+    </div>
+    <div class="interest-card">
+      <span class="interest-number">02</span>
+      <span class="interest-icon">🔬</span>
+      <h3 class="interest-title"><em>Bilim</em></h3>
+      <p class="interest-desc">Evren, henüz sorulmamış soruların deposu. Atomların dansından galaksilerin hareketiyle, doğanın matematiksel zarafeti beni her zaman büyülüyor. Bilim, merakı sistematik hale getirme sanatı.</p>
+    </div>
+    <div class="interest-card">
+      <span class="interest-number">03</span>
+      <span class="interest-icon">🎨</span>
+      <h3 class="interest-title"><em>Sanat</em></h3>
+      <p class="interest-desc">İnsan ruhunun en dürüst dili. Bir tablo, bir beste, bir şiir — bunlar zamana karşı verilen meydan okumalar. Sanat, var olmanın anlam kazandığı o kırılgan anda doğar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+
+<div class="quote-section reveal">
+  <p class="quote-text">"Eğitimin kökleri acı olsa da meyvesi tatlıdır."</p>
+  <p class="quote-author">— Aristoteles</p>
+</div>
+
+<!-- CONTACT -->
+
+<section id="iletisim">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p class="section-label reveal">İletişim</p>
+      <h2 class="section-title reveal">Birlikte<br><em>düşünelim</em></h2>
+      <hr class="divider reveal">
+      <p class="contact-intro reveal">Öğretim, bilim veya sanat üzerine konuşmak, iş birliği yapmak ya da sadece merhaba demek için ulaşabilirsiniz.</p>
+      <div class="contact-links reveal">
+        <a href="mailto:deniz@example.com" class="contact-link">
+          <span class="contact-link-label">E-posta</span>
+          <span>deniz@example.com</span>
+        </a>
+        <a href="#" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span>
+          <span>linkedin.com/in/denizcetin</span>
+        </a>
+        <a href="#" class="contact-link">
+          <span class="contact-link-label">Konum</span>
+          <span>Türkiye</span>
+        </a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="deco-name">Deniz<br>Çetin</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <span>© 2026 Deniz Çetin</span>
+  <span>Öğret · Keşfet · Yarat</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 4 + 'px';
+    cursor.style.top = my - 4 + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 16) * 0.12;
+    ry += (my - ry - 16) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2.5)';
+      ring.style.transform = 'scale(1.4)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Stagger children if multiple
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth nav scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
