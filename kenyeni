@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deniz Çetin — Eğitimci & İçerik Üreticisi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --cream: #f5f0e8;
+    --warm: #e8dfc8;
+    --accent: #c4622d;
+    --accent2: #2d6e9e;
+    --gold: #b8952a;
+    --muted: #7a6e62;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–cream);
+color: var(–ink);
+font-family: ‘DM Sans’, sans-serif;
+font-weight: 300;
+overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+display: flex; justify-content: space-between; align-items: center;
+padding: 1.2rem 4rem;
+background: rgba(245,240,232,0.92);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid rgba(180,160,120,0.25);
+}
+.nav-logo {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.2rem;
+font-style: italic;
+color: var(–accent);
+letter-spacing: 0.02em;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+text-decoration: none;
+font-size: 0.82rem;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–muted);
+transition: color 0.3s;
+}
+.nav-links a:hover { color: var(–accent); }
+
+/* ─── HERO ─── */
+.hero {
+min-height: 100vh;
+display: grid;
+grid-template-columns: 1fr 1fr;
+position: relative;
+overflow: hidden;
+}
+
+.hero-left {
+display: flex; flex-direction: column; justify-content: center;
+padding: 8rem 4rem 4rem 4rem;
+position: relative;
+z-index: 2;
+}
+
+.hero-tag {
+font-size: 0.72rem;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 1.5rem;
+display: flex; align-items: center; gap: 0.8rem;
+}
+.hero-tag::before {
+content: ‘’;
+display: inline-block;
+width: 2.5rem; height: 1px;
+background: var(–accent);
+}
+
+h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(3rem, 5vw, 5rem);
+line-height: 1.1;
+font-weight: 900;
+color: var(–ink);
+margin-bottom: 0.4rem;
+}
+h1 em {
+font-style: italic;
+color: var(–accent);
+}
+
+.hero-subtitle {
+font-size: 1rem;
+color: var(–muted);
+margin: 1.5rem 0 2.5rem;
+line-height: 1.7;
+max-width: 420px;
+font-weight: 300;
+}
+
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.btn {
+display: inline-flex; align-items: center; gap: 0.5rem;
+padding: 0.85rem 2rem;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.82rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+text-decoration: none;
+cursor: pointer;
+border: none;
+transition: all 0.3s;
+}
+.btn-primary {
+background: var(–accent);
+color: var(–cream);
+}
+.btn-primary:hover { background: var(–ink); transform: translateY(-2px); }
+.btn-outline {
+background: transparent;
+color: var(–ink);
+border: 1.5px solid var(–ink);
+}
+.btn-outline:hover { background: var(–ink); color: var(–cream); }
+
+.hero-right {
+position: relative;
+overflow: hidden;
+}
+.hero-bg-panel {
+position: absolute; inset: 0;
+background: linear-gradient(135deg, var(–warm) 0%, #ddd4bc 100%);
+}
+.hero-decorative {
+position: absolute;
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(8rem, 14vw, 15rem);
+font-weight: 900;
+font-style: italic;
+color: rgba(196,98,45,0.07);
+right: -1rem;
+top: 50%;
+transform: translateY(-50%);
+line-height: 1;
+user-select: none;
+white-space: nowrap;
+}
+.hero-card {
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+background: var(–cream);
+padding: 2.5rem;
+width: min(320px, 80%);
+box-shadow: 20px 20px 60px rgba(0,0,0,0.12);
+}
+.hero-card-label {
+font-size: 0.68rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 1rem;
+}
+.hero-card h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.6rem;
+font-weight: 700;
+margin-bottom: 0.8rem;
+}
+.hero-card p {
+font-size: 0.85rem;
+color: var(–muted);
+line-height: 1.6;
+}
+.hero-stats {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 1rem; margin-top: 1.5rem;
+}
+.stat { text-align: center; padding: 0.8rem; background: var(–warm); }
+.stat-num {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.8rem;
+font-weight: 900;
+color: var(–accent);
+}
+.stat-lbl { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(–muted); }
+
+/* ─── SECTIONS ─── */
+section { padding: 6rem 4rem; }
+
+.section-header {
+margin-bottom: 4rem;
+}
+.section-tag {
+font-size: 0.72rem;
+letter-spacing: 0.22em;
+text-transform: uppercase;
+color: var(–accent);
+display: flex; align-items: center; gap: 0.8rem;
+margin-bottom: 1rem;
+}
+.section-tag::before {
+content: ‘’; display: inline-block;
+width: 2rem; height: 1px; background: var(–accent);
+}
+h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(2rem, 3.5vw, 3rem);
+font-weight: 700;
+line-height: 1.15;
+}
+h2 em { font-style: italic; color: var(–accent); }
+
+/* ─── ABOUT ─── */
+.about { background: var(–ink); color: var(–cream); }
+.about .section-tag { color: var(–gold); }
+.about .section-tag::before { background: var(–gold); }
+.about h2 { color: var(–cream); }
+.about h2 em { color: var(–gold); }
+.about-grid {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 5rem; align-items: start;
+}
+.about-text p {
+font-size: 1rem; line-height: 1.85;
+color: rgba(245,240,232,0.8);
+margin-bottom: 1.2rem;
+}
+.about-text p strong { color: var(–gold); font-weight: 500; }
+.about-aside { display: flex; flex-direction: column; gap: 1.5rem; }
+.about-box {
+border: 1px solid rgba(184,149,42,0.3);
+padding: 1.8rem;
+}
+.about-box h4 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+color: var(–gold);
+margin-bottom: 1rem;
+letter-spacing: 0.05em;
+}
+.about-box ul { list-style: none; }
+.about-box li {
+font-size: 0.88rem;
+color: rgba(245,240,232,0.7);
+padding: 0.45rem 0;
+border-bottom: 1px solid rgba(255,255,255,0.06);
+display: flex; align-items: center; gap: 0.6rem;
+}
+.about-box li:last-child { border-bottom: none; }
+.about-box li::before { content: ‘—’; color: var(–gold); font-size: 0.75rem; }
+
+/* ─── EXPERTISE ─── */
+.expertise { background: var(–cream); }
+.expertise-grid {
+display: grid; grid-template-columns: repeat(3, 1fr);
+gap: 2px;
+}
+.exp-card {
+background: var(–warm);
+padding: 2.5rem 2rem;
+transition: background 0.3s, transform 0.3s;
+cursor: default;
+}
+.exp-card:hover { background: var(–accent); color: var(–cream); transform: translateY(-4px); }
+.exp-icon {
+font-size: 2rem; margin-bottom: 1.2rem;
+display: block;
+}
+.exp-card h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.25rem; font-weight: 700;
+margin-bottom: 0.8rem;
+}
+.exp-card p { font-size: 0.88rem; line-height: 1.7; color: var(–muted); }
+.exp-card:hover p { color: rgba(245,240,232,0.85); }
+
+/* ─── LANGUAGES ─── */
+.languages { background: var(–warm); }
+.lang-grid {
+display: grid; grid-template-columns: repeat(4, 1fr);
+gap: 2rem;
+}
+.lang-card {
+text-align: center; padding: 2rem;
+background: var(–cream);
+box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.lang-flag { font-size: 2.5rem; margin-bottom: 0.8rem; }
+.lang-name {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.1rem; font-weight: 700;
+margin-bottom: 0.4rem;
+}
+.lang-level {
+font-size: 0.75rem; letter-spacing: 0.15em;
+text-transform: uppercase; color: var(–accent);
+}
+.lang-bar {
+height: 3px; background: var(–warm);
+margin-top: 1rem; border-radius: 2px; overflow: hidden;
+}
+.lang-fill { height: 100%; background: var(–accent); border-radius: 2px; }
+
+/* ─── MEDIA ─── */
+.media { background: var(–ink); color: var(–cream); }
+.media .section-tag { color: var(–accent2); }
+.media .section-tag::before { background: var(–accent2); }
+.media h2 { color: var(–cream); }
+.media h2 em { color: var(–accent2); }
+.media-grid {
+display: grid; grid-template-columns: repeat(3, 1fr);
+gap: 2px;
+}
+.media-card {
+background: rgba(255,255,255,0.04);
+padding: 2.5rem 2rem;
+border: 1px solid rgba(255,255,255,0.06);
+transition: background 0.3s;
+}
+.media-card:hover { background: rgba(45,110,158,0.2); }
+.media-card a {
+color: var(–accent2);
+text-decoration: none;
+font-size: 0.82rem;
+letter-spacing: 0.05em;
+}
+.media-card a:hover { text-decoration: underline; }
+.media-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+.media-card h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.15rem; margin-bottom: 0.6rem;
+color: var(–cream);
+}
+.media-card p { font-size: 0.85rem; color: rgba(245,240,232,0.6); line-height: 1.6; margin-bottom: 1rem; }
+
+/* ─── COUNTRIES ─── */
+.countries { background: var(–cream); }
+.countries-list {
+display: flex; flex-wrap: wrap; gap: 1rem;
+margin-top: 3rem;
+}
+.country-chip {
+display: flex; align-items: center; gap: 0.6rem;
+padding: 0.7rem 1.4rem;
+background: var(–warm);
+font-size: 0.88rem; letter-spacing: 0.04em;
+font-weight: 400;
+transition: background 0.2s;
+}
+.country-chip:hover { background: var(–accent); color: var(–cream); }
+
+/* ─── CONTACT / FOOTER ─── */
+footer {
+background: var(–ink); color: var(–cream);
+padding: 4rem;
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 4rem; align-items: end;
+}
+.footer-brand h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 2rem; font-weight: 700;
+margin-bottom: 0.6rem;
+}
+.footer-brand p {
+font-size: 0.88rem; color: rgba(245,240,232,0.5);
+line-height: 1.6;
+}
+.footer-links { text-align: right; }
+.footer-links a {
+display: block; text-decoration: none;
+color: rgba(245,240,232,0.6);
+font-size: 0.85rem; letter-spacing: 0.08em;
+text-transform: uppercase; margin-bottom: 0.8rem;
+transition: color 0.3s;
+}
+.footer-links a:hover { color: var(–gold); }
+.footer-bottom {
+background: #111;
+padding: 1.2rem 4rem;
+display: flex; justify-content: space-between; align-items: center;
+}
+.footer-bottom p { font-size: 0.75rem; color: rgba(245,240,232,0.3); letter-spacing: 0.08em; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+.hero-left > * {
+animation: fadeUp 0.8s ease both;
+}
+.hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-left > *:nth-child(2) { animation-delay: 0.25s; }
+.hero-left > *:nth-child(3) { animation-delay: 0.4s; }
+.hero-left > *:nth-child(4) { animation-delay: 0.55s; }
+.hero-right { animation: fadeUp 1s ease 0.3s both; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+nav { padding: 1rem 1.5rem; }
+.nav-links { gap: 1.2rem; }
+.hero { grid-template-columns: 1fr; min-height: auto; }
+.hero-left { padding: 7rem 1.5rem 3rem; }
+.hero-right { height: 300px; }
+section { padding: 4rem 1.5rem; }
+.about-grid, .expertise-grid, .media-grid, .lang-grid { grid-template-columns: 1fr; }
+footer { grid-template-columns: 1fr; }
+.footer-links { text-align: left; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-logo">Deniz Çetin</div>
+  <ul class="nav-links">
+    <li><a href="#hakkinda">Hakkında</a></li>
+    <li><a href="#uzmanlık">Uzmanlık</a></li>
+    <li><a href="#medya">Medya</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="ana">
+  <div class="hero-left">
+    <div class="hero-tag">Eğitimci · Yazar · İçerik Üreticisi</div>
+    <h1>Deniz<br><em>Çetin</em></h1>
+    <p class="hero-subtitle">
+      37 yılı aşkın öğretmenlik deneyimi, üç kıtada edinilmiş birikim ve 
+      teknoloji ile eğitimi buluşturan özgün bir bakış açısıyla bilginin peşinde.
+    </p>
+    <div class="hero-btns">
+      <a href="#hakkinda" class="btn btn-primary">Daha Fazla Bilgi</a>
+      <a href="https://www.baskentekrani.com.tr" target="_blank" class="btn btn-outline">Başkent Ekranı →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-bg-panel"></div>
+    <div class="hero-decorative">DC</div>
+    <div class="hero-card">
+      <div class="hero-card-label">Kısaca</div>
+      <h3>Deniz Çetin</h3>
+      <p>1968 · Şereflikoçhisar doğumlu. Hacettepe Üniversitesi mezunu. Şu anda İstanbul Üniversitesi'nde Siyaset Bilimi & Kamu Yönetimi öğrencisi.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">37+</div>
+          <div class="stat-lbl">Yıl Deneyim</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-lbl">Ülke</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-lbl">Dil</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">∞</div>
+          <div class="stat-lbl">Merak</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section class="about" id="hakkinda">
+  <div class="section-header">
+    <div class="section-tag">Hakkında</div>
+    <h2>Bilim, Teknoloji ve<br><em>Eğitimin Kesişiminde</em></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        1968 yılında <strong>Şereflikoçhisar</strong>'da dünyaya gelen Deniz Çetin, ilk ve orta öğrenimini memleketinde tamamladıktan sonra 
+        <strong>Hacettepe Üniversitesi</strong>'nde yükseköğrenimini gerçekleştirdi.
+      </p>
+      <p>
+        <strong>1987</strong>'den bu yana sürdürdüğü öğretmenlik kariyerinde Türkiye sınırlarını aşarak <strong>Almanya</strong> ve <strong>Suudi Arabistan</strong>'da da görev yaptı. Her ülke ona farklı bir eğitim kültürü ve çok boyutlu bir perspektif kazandırdı.
+      </p>
+      <p>
+        Eğitim hayatı boyunca <strong>JavaScript</strong> ve <strong>Python</strong> başta olmak üzere çeşitli programlama dillerini öğrendi. Şu anda <strong>İstanbul Üniversitesi</strong>'nde Siyaset Bilimi ve Kamu Yönetimi alanında derinleşmeye devam ediyor.
+      </p>
+      <p>
+        Temel hedefi: <strong>bilim ve teknolojiyi insanlığa hizmet edecek biçimde</strong> birleştirerek eğitime katkı sağlamak.
+      </p>
+    </div>
+    <div class="about-aside">
+      <div class="about-box">
+        <h4>Eğitim</h4>
+        <ul>
+          <li>Hacettepe Üniversitesi – Lisans</li>
+          <li>İstanbul Üniversitesi – Siyaset Bil. & Kamu Yön. (Devam)</li>
+          <li>Jean Monnet AB Sosyal Politika Sertifikası – Ankara Üni.</li>
+        </ul>
+      </div>
+      <div class="about-box">
+        <h4>Teknik Beceriler</h4>
+        <ul>
+          <li>JavaScript</li>
+          <li>Python</li>
+          <li>Podcast Prodüksiyonu</li>
+          <li>Web İçerik Yönetimi</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+
+<section class="expertise" id="uzmanlık">
+  <div class="section-header">
+    <div class="section-tag">Uzmanlık Alanları</div>
+    <h2>Tutkuyla İzlediği<br><em>Üç Ana Yol</em></h2>
+  </div>
+  <div class="expertise-grid">
+    <div class="exp-card">
+      <span class="exp-icon">📚</span>
+      <h3>Eğitim & Pedagoji</h3>
+      <p>Türkiye, Almanya ve Suudi Arabistan'da edinilen deneyimle şekillenen zengin bir öğretmenlik birikimi. Eğitimde yenilikçi yöntemler ve erişilebilir içerik üretimi.</p>
+    </div>
+    <div class="exp-card">
+      <span class="exp-icon">💻</span>
+      <h3>Teknoloji & Yazılım</h3>
+      <p>JavaScript ve Python ile yazılım dünyasına olan ilgi; teknolojiyi eğitime entegre etme vizyonu ve dijital okuryazarlığın yaygınlaştırılması.</p>
+    </div>
+    <div class="exp-card">
+      <span class="exp-icon">🎙️</span>
+      <h3>Medya & İçerik</h3>
+      <p>Başkent Ekranı web sitesi, YouTube kanalı ve podcast yayınları aracılığıyla teknoloji, eğitim ve güncel gelişmelere dair özgün analizler.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+
+<section class="languages">
+  <div class="section-header">
+    <div class="section-tag">Diller</div>
+    <h2>Sınırları Aşan<br><em>İletişim Gücü</em></h2>
+  </div>
+  <div class="lang-grid">
+    <div class="lang-card">
+      <div class="lang-flag">🇹🇷</div>
+      <div class="lang-name">Türkçe</div>
+      <div class="lang-level">Ana Dil</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇬🇧</div>
+      <div class="lang-name">İngilizce</div>
+      <div class="lang-level">B2 Seviye</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:72%"></div></div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇩🇪</div>
+      <div class="lang-name">Almanca</div>
+      <div class="lang-level">Yetkin</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:78%"></div></div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">🇫🇷</div>
+      <div class="lang-name">Fransızca</div>
+      <div class="lang-level">Yetkin</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:70%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+
+<section class="media" id="medya">
+  <div class="section-header">
+    <div class="section-tag">Dijital Medya</div>
+    <h2>Bilginin <em>Dijital Ayak İzi</em></h2>
+  </div>
+  <div class="media-grid">
+    <div class="media-card">
+      <span class="media-icon">🌐</span>
+      <h3>Başkent Ekranı</h3>
+      <p>Teknoloji, eğitim ve güncel gelişmelere dair derinlemesine analizlerin yayımlandığı bağımsız web platformu.</p>
+      <a href="https://www.baskentekrani.com.tr" target="_blank">www.baskentekrani.com.tr →</a>
+    </div>
+    <div class="media-card">
+      <span class="media-icon">▶️</span>
+      <h3>YouTube Kanalı</h3>
+      <p>Eğitim içerikleri, teknoloji değerlendirmeleri ve toplumsal analizleri video formatında izleyicilerle buluşturuyor.</p>
+      <a href="https://www.youtube.com" target="_blank">Kanala Git →</a>
+    </div>
+    <div class="media-card">
+      <span class="media-icon">🎧</span>
+      <h3>Podcast Yayınları</h3>
+      <p>Teknoloji, eğitim ve güncel gelişmeler üzerine konuşmalar; dinleyicilere net bir perspektif sunmayı amaçlıyor.</p>
+      <a href="#medya">Podcast'leri Dinle →</a>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTRIES -->
+
+<section class="countries">
+  <div class="section-header">
+    <div class="section-tag">Kariyer Haritası</div>
+    <h2>Üç Kıtada<br><em>Eğitim Deneyimi</em></h2>
+  </div>
+  <div class="countries-list">
+    <div class="country-chip">🇹🇷 Türkiye</div>
+    <div class="country-chip">🇩🇪 Almanya</div>
+    <div class="country-chip">🇸🇦 Suudi Arabistan</div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+
+<footer id="iletisim">
+  <div class="footer-brand">
+    <h3>Deniz Çetin</h3>
+    <p>Eğitimci · Yazar · İçerik Üreticisi<br>
+    Bilim ve teknolojiyi insanlığa hizmet için birleştiren bir yolculuk.</p>
+  </div>
+  <div class="footer-links">
+    <a href="https://www.baskentekrani.com.tr" target="_blank">Başkent Ekranı</a>
+    <a href="#hakkinda">Hakkında</a>
+    <a href="#uzmanlık">Uzmanlık</a>
+    <a href="#medya">Medya</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 Deniz Çetin — Tüm Hakları Saklıdır</p>
+  <p>Şereflikoçhisar · Ankara · İstanbul</p>
+</div>
+
+</body>
+</html>
